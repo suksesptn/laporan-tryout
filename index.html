@@ -5,135 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Laporan Tryout UTBK</title>
     <style>
-        /* CSS Sederhana untuk Tampilan Bersih */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            align-items: center;
+        /* --- STYLE SAMA SEPERTI SEBELUMNYA --- */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; display: flex; flex-direction: column; min-height: 100vh; align-items: center; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px; width: 90%; margin-top: 50px; text-align: center; flex: 1; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        p.intro { color: #7f8c8d; font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px; }
+        .search-box { display: flex; flex-direction: column; gap: 10px; }
+        
+        /* Ganti input text jadi lebih cocok buat angka */
+        input[type="number"] { 
+            padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; width: 100%; box-sizing: border-box; 
+            -moz-appearance: textfield; /* Hilangkan spinner di Firefox */
         }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } /* Hilangkan spinner di Chrome */
 
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 90%;
-            margin-top: 50px;
-            text-align: center;
-            flex: 1;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        p.intro {
-            color: #7f8c8d;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 30px;
-        }
-
-        .search-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            width: 100%;
-            box-sizing: border-box; /* Agar padding tidak merusak lebar */
-        }
-
-        button.btn-search {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-
-        button.btn-search:hover {
-            background-color: #2980b9;
-        }
-
-        #result-area {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            display: none; /* Sembunyikan awal */
-        }
-
-        .student-name {
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .btn-download {
-            display: inline-block;
-            background-color: #27ae60;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .btn-download:hover {
-            background-color: #219150;
-        }
-
-        .error {
-            color: #e74c3c;
-            margin-top: 10px;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            color: #95a5a6;
-            font-size: 0.8rem;
-        }
+        button.btn-search { background-color: #3498db; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        button.btn-search:hover { background-color: #2980b9; }
+        
+        #result-area { margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee; display: none; }
+        .student-info { margin-bottom: 15px; }
+        .student-name { font-weight: bold; font-size: 1.3rem; color: #2c3e50; display: block;}
+        .student-nis { color: #7f8c8d; font-size: 0.9rem; }
+        
+        .btn-download { display: inline-block; background-color: #27ae60; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; margin-top: 5px;}
+        .btn-download:hover { background-color: #219150; }
+        .error { color: #e74c3c; margin-top: 10px; }
+        footer { margin-top: auto; padding: 20px; color: #95a5a6; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>TRYOUT UTBK-SNBT</h1>
-        
         <p class="intro">
             Laporan Perkembangan Hasil Tryout UTBK-SNBT SMA PU Albayan <br>
             Semester Ganjil Tahun Ajaran 2025/2026
         </p>
 
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Ketik Nama Siswa...">
+            <input type="number" id="searchInput" placeholder="Masukkan NIS Siswa (Contoh: 212210)...">
             <button class="btn-search" onclick="cariSiswa()">Cari Laporan</button>
         </div>
 
         <div id="result-area">
-            <span id="resultName" class="student-name"></span>
+            <div class="student-info">
+                <span id="resultName" class="student-name"></span>
+                <span id="resultNIS" class="student-nis"></span>
+            </div>
             <a id="downloadLink" href="#" target="_blank" class="btn-download">DOWNLOAD LAPORAN</a>
         </div>
         
         <div id="loading" style="display:none; margin-top:10px; color:#3498db;">Sedang memuat data...</div>
         <div id="errorMsg" class="error"></div>
-
     </div>
 
     <footer>
@@ -141,13 +64,11 @@
     </footer>
 
     <script>
-        // --- KONFIGURASI ---
-        // GANTI URL DI BAWAH INI DENGAN URL DARI APPS SCRIPT ANDA
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLBGcAcu9AyGrUHQK7nSrrRqGcoF-X3LN6Mskn5juAVsZQ4ncE0G668yEygyeInaZI/exec'; 
+        // --- JANGAN LUPA GANTI URL INI ---
+        const SCRIPT_URL = 'PASTE_URL_WEB_APP_SCRIPT_DISINI'; 
 
         let studentsData = [];
 
-        // Ambil data saat halaman dibuka agar pencarian cepat
         window.onload = function() {
             document.getElementById('loading').style.display = 'block';
             fetch(SCRIPT_URL)
@@ -155,44 +76,45 @@
                 .then(data => {
                     studentsData = data;
                     document.getElementById('loading').style.display = 'none';
-                    console.log("Data berhasil dimuat:", studentsData.length + " siswa");
                 })
                 .catch(error => {
                     document.getElementById('loading').style.display = 'none';
-                    document.getElementById('errorMsg').innerText = "Gagal mengambil data. Coba refresh halaman.";
+                    document.getElementById('errorMsg').innerText = "Gagal mengambil data database.";
                 });
         };
 
         function cariSiswa() {
-            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            const input = document.getElementById('searchInput').value.trim();
             const resultArea = document.getElementById('result-area');
             const resultName = document.getElementById('resultName');
+            const resultNIS = document.getElementById('resultNIS');
             const downloadLink = document.getElementById('downloadLink');
             const errorMsg = document.getElementById('errorMsg');
 
-            // Reset tampilan
             resultArea.style.display = 'none';
             errorMsg.innerText = '';
 
-            if (input.length < 3) {
-                errorMsg.innerText = "Masukkan minimal 3 huruf nama.";
+            if (input === "") {
+                errorMsg.innerText = "Silakan isi NIS terlebih dahulu.";
                 return;
             }
 
             if (studentsData.length === 0) {
-                errorMsg.innerText = "Data belum siap, tunggu sebentar...";
+                errorMsg.innerText = "Data sedang dimuat, coba 2 detik lagi...";
                 return;
             }
 
-            // Logika Pencarian (Mencari yang mengandung kata input)
-            const found = studentsData.find(s => s.nama.toLowerCase().includes(input));
+            // --- LOGIKA PENCARIAN NIS ---
+            // Kita gunakan String() agar aman membandingkan angka dengan teks
+            const found = studentsData.find(s => String(s.nis) === String(input));
 
             if (found) {
-                resultName.innerText = found.nama; // Tampilkan Nama Lengkap dari Database
-                downloadLink.href = found.link;    // Set Link Download
+                resultName.innerText = found.nama;
+                resultNIS.innerText = "NIS: " + found.nis + " | Kelas: " + found.kelas;
+                downloadLink.href = found.link;
                 resultArea.style.display = 'block';
             } else {
-                errorMsg.innerText = "Nama tidak ditemukan. Pastikan ejaan benar.";
+                errorMsg.innerText = "NIS tidak ditemukan. Periksa kembali input Anda.";
             }
         }
     </script>
